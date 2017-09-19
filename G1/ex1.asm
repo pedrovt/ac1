@@ -1,7 +1,7 @@
 	.data
 				# nada a colocar aqui, de momento
 	.text
-	.globl main
+	.globl main		# Define o ponto de entrada do programa
 
 main: 	ori $t0,$0,3		# $t0 = x (substituir val_x pelo # valor de x pretendido)
 	ori $t2,$0,8 		# $t2 = 8
