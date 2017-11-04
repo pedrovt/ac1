@@ -1,3 +1,9 @@
+# --------------------------------
+# Guião 4, Ex 1
+# Arquitectura de Computadores I
+# Pedro Teixeira, 84715, MIECT
+# --------------------------------
+
 # Mapa de registos
 # num     : $t0
 # i   	  : $t1

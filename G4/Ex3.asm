@@ -1,7 +1,8 @@
+# --------------------------------
 # Guião 4, Ex 3
-# Pedro Teixeira, MIECT, 84715
-
-# ---------------------------------------------------
+# Arquitectura de Computadores I
+# Pedro Teixeira, 84715, MIECT
+# --------------------------------
 
 # Registers Map
 # p 	   : $t0
@@ -12,26 +13,28 @@
 	.data	
 	.eqv SIZE, 4				# define SIZE 4
 	.eqv print_int10, 1
-
 array:	.word 7692, 23, 5, 234
+
 	.text
 	.globl main	
 			
 main:						# void main (void) {
-	la  $t0, array				#	p = array; 		
-	ori $t1, $0, SIZE			# 	p_ultimo = array + size;
-	sll $t1, $t1, 2				 	
-
-	ori $t3, $0, 0				# 	int soma = 0;
+	li $t3, 0				# 	int soma = 0;
+	li $t4, SIZE				
+	sll $t4, $t4, 2
 	
-	lb  $t2, ($t1)	
-while:  beq $t2, '\0', endLoop 			# 	while( p < pultimo ) {	
-	lb $t4, ($t2)				#       	soma = soma + (*p);
-	add $t3, $t3, $t4			
-	addi $t0, $t0, 1			#		p++
+	la  $t0, array				#	p = array; 		
+	addu $t1, $t0, $t4			# 	p_ultimo = array + size;
+
+while:  bge $t0, $t1, endW 			# 	while( p < pultimo ) {	
+
+	lw $t2, 0($t0)				#		$t2 = *p
+	add $t3, $t3, $t2			#       	soma = soma + (*p);
+	addi $t0, $t0, 4			#		p++
 						# 	}
 	j while
-endLoop:ori $v0, $0, print_int10		# 	print_int10(soma);
+endW:	
+	ori $v0, $0, print_int10		# 	print_int10(soma);
 	or  $a0, $0, $t3
 	syscall
 	  
