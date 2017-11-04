@@ -1,4 +1,8 @@
-# Guião 5, Ex. 1
+# --------------------------------
+# Guião 5, Ex 1
+# Arquitectura de Computadores I
+# Pedro Teixeira, 84715, MIECT
+# --------------------------------
 
 # Mapa de registos
 # i         : $t0
@@ -30,7 +34,7 @@ while:	beq $t0, SIZE, endW	# while (i < size) {
 	sll $t2, $t0, 2
 	
 	addu $t2, $t2, $t1	# 	$t2 = &list[i]
-	sw $v0, ($t2)		# 	lista[i] = read_int();		
+	sw $v0, 0($t2)		# 	lista[i] = read_int();		
 														
 	addi $t0, $t0, 1	# 	i++
 	j while

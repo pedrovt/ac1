@@ -1,5 +1,5 @@
 # --------------------------------
-# Guião 5, Ex 3
+# Guião 5, Ex 4
 # Arquitectura de Computadores I
 # Pedro Teixeira, 84715, MIECT
 # --------------------------------
@@ -22,8 +22,6 @@
 # p: $t3
 # *p: $t4
 # lista+Size: $t5
-
-
 
 	.data
 	.eqv SIZE, 10	#define SIZE 10
@@ -70,34 +68,30 @@ while1:	beq $t0, SIZE, endW1	# while (i < size) {
 endW1: 				# }
 	 			
 	 			# -------------------------------------------------------------
-				# Bubble Sort
-	la $t6, list		# $t6 = list
+				# Bubble Sort (versão com ponteiros)
 	
 do:				# do {
-	li $t3, 0		# 	i = 0
-	li $t4, FALSE		#	houveTroca = FALSE;
-
-				#       ---------------------
-while:	bge $t3, SIZE, endW	#	while (i < SIZE) {
+	li $t3, FALSE		# 	houveTroca = FALSE;
+	la $t4, list		#	p = lista
 	
-	sll  $t7, $t3, 2	#		$t7 = i * 4
-	addu $t7, $t7, $t6	# 		$t7 = lista + (i * 4)
-	lw $t8,0($t7) 		# 		$t8 = lista[lista + (i * 4)]
-	lw $t9,4($t7) 		# 		$t9 = lista[lista + (i * 4) + 1]	
-	
-if:	ble $t8, $t9, endIf 	#		if (lista[i] > lista[i+1]) {
-				#			aux = lista[i];
-	sw $t9, 0($t7)		#			lista[i+1] = aux;
-	sw $t8, 4($t7)		#			lista[i] = lista[i+1];
-	li $t4, TRUE		#			houveTroca = TRUE;
-endIf: 				#		}	
-		
-	addi $t3, $t3, 1	# 		i++
-	j while		
-endW:				#	}
-				#       ---------------------
-endDo:	beq $t4, TRUE, do  	# } while (houveTroca == TRUE);
+	li $t5, SIZE		# 	$t5 = size	
+	sll $t5, $t5, 2		# 	$t5 = size * 4 (each word uses 4 positions in memory)
+	addu $t5, $t5, $t4	# 	$t5 = $t5 + $t4 == size * 4 + p == pUltimo
 
+for:	bge $t4, $t5, endFor	# 	for (p = lista; p < pUltimo; p++) {
+	lw $t6, 0($t4)		#		$t6 = *(p)
+	lw $t7, 4($t4)		#		$t7 = *(p+1)
+if:	ble $t6, $t7, endIf	# 		if (*p > *(p+1)) {
+				# 			aux = *p;
+	sw $t6, 4($t4)		# 			*p = *(p+1);
+	sw $t7, 0($t4)		# 			*(p+1) = aux;
+	li $t3, TRUE		# 			houveTroca = TRUE;
+endIf:				# 		}
+	addi $t4, $t4, 4	# p++	
+	j for
+endFor: 			# 	}
+	beq $t3, TRUE, do	# } while (houveTroca==TRUE);
+endDo:
 				# -------------------------------------------------------------
 	li $v0, print_string	# print_string("\nConteudo do array:\n");
 	la $a0, strB

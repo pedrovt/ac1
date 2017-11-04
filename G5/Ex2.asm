@@ -1,4 +1,8 @@
-# Guião 5, Ex. 2
+# --------------------------------
+# Guião 5, Ex 2
+# Arquitectura de Computadores I
+# Pedro Teixeira, 84715, MIECT
+# --------------------------------
 
 # Mapa de registos
 # p: $t0
@@ -20,14 +24,15 @@ main:	li $v0, print_string	# print_string("\nConteudo do array:\n");
 	la $a0, strA
 	syscall
 	
-	la $t0, list		# p = lista
-				# # $t2 = lista + size;
-	li $t2, SIZE		# $t2 = size
-	sll $t2, $t2, 2		# $t2 = $t2 * 4
+	la $t0, list		# p = lista (posição em memória do início do array)
+				
+				# $t2 = lista + size; (posição em memória do fim do array)
+	li $t2, SIZE		# $t2 = size	
+	sll $t2, $t2, 2		# $t2 = size * 4 (each word uses 4 positions in memory)
 	addu $t2, $t2, $t0	# $t2 = $t2 + $t0 == size * 4 + list
 				
 while:  bge $t0, $t2, endW	# while (p < lista + SIZE) {
-	lw $t1, 0($t0)		#	$t1 = *p
+	lw $t1, 0($t0)		#	$t1 = *p	(could store word in $a0...)
 	
 	li $v0, print_int10	#	print_int10( *p );
 	move $a0, $t1
@@ -42,5 +47,3 @@ while:  bge $t0, $t2, endW	# while (p < lista + SIZE) {
 	j while			# }
 endW:	
 	jr $ra			# End program
-
-	

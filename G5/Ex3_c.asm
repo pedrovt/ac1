@@ -1,5 +1,5 @@
 # --------------------------------
-# Guião 5, Ex 3
+# Guião 5, Ex 3c
 # Arquitectura de Computadores I
 # Pedro Teixeira, 84715, MIECT
 # --------------------------------
@@ -22,7 +22,6 @@
 # p: $t3
 # *p: $t4
 # lista+Size: $t5
-
 
 
 	.data
@@ -85,7 +84,7 @@ while:	bge $t3, SIZE, endW	#	while (i < SIZE) {
 	lw $t8,0($t7) 		# 		$t8 = lista[lista + (i * 4)]
 	lw $t9,4($t7) 		# 		$t9 = lista[lista + (i * 4) + 1]	
 	
-if:	ble $t8, $t9, endIf 	#		if (lista[i] > lista[i+1]) {
+if:	bleu $t8, $t9, endIf 	#		if (lista[i] > lista[i+1]) {
 				#			aux = lista[i];
 	sw $t9, 0($t7)		#			lista[i+1] = aux;
 	sw $t8, 4($t7)		#			lista[i] = lista[i+1];
